@@ -112,7 +112,13 @@ const Login = () => {
             </p>
           </Link>
           <p className="text-center text-sm font-semibold mt-2">
-            Made with ❤ by Rohit Maurya
+            Made with ❤ by{" "}
+            <Link
+              to={"https://portfolio-rohit-maurya-webdev.netlify.app/"}
+              className="text-[#006699] font-bold cursor-pointer  hover:text-[#004b70] transition"
+            >
+              Rohit Maurya
+            </Link>
           </p>
         </form>
       </div>

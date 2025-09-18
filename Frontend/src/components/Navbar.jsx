@@ -40,7 +40,7 @@ const Navbar = () => {
         <NavItem icon={<FaUserFriends />} label="My Network" />
         <NavItem icon={<IoMdNotifications />} label="Notifications" />
 
-        <div className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px] rounded-full overflow-hidden cursor-pointer border-2 border-gray-300 hover:border-[#006699] transition" onClick={handelShowButton}>
+        <div className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px] rounded-full overflow-hidden cursor-pointer border-2 border-gray-300 hover:border-[#006699] transition mx-3" onClick={handelShowButton}>
           <img
             src={dp}
             alt="user profile"

@@ -117,7 +117,11 @@ const SignUp = () => {
               )}
             </span>
           </div>
-          {error && <p className="text-sm text-center text-red-600 font-semibold">{ error}</p>}
+          {error && (
+            <p className="text-sm text-center text-red-600 font-semibold">
+              {error}
+            </p>
+          )}
           <button
             type="submit"
             disabled={loading}
@@ -136,7 +140,13 @@ const SignUp = () => {
             </p>
           </Link>
           <p className="text-center text-sm mt-2 font-semibold">
-            Made with ❤ by Rohit Maurya
+            Made with ❤ by{" "}
+            <Link
+              to={"https://portfolio-rohit-maurya-webdev.netlify.app/"}
+              className="text-[#006699] font-bold cursor-pointer  hover:text-[#004b70] transition"
+            >
+              Rohit Maurya
+            </Link>
           </p>
         </form>
       </div>
