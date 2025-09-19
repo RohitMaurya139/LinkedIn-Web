@@ -6,7 +6,6 @@ import logo2 from "../assets/logo2.png";
 import {UserData} from "../context/userDataContext.js"
 import UserInfoCard from "./UserInfoCard.jsx";
 const Navbar = () => {
-    const { userData } = useContext(UserData); 
     const [showUserInfo,setShowUserInfo]=useState(false)
     const handelShowButton = () => {
          setShowUserInfo(!showUserInfo)

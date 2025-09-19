@@ -3,10 +3,13 @@ import dp from "../assets/dp.webp";
 import { FaPlus } from "react-icons/fa";
 import { IoCameraOutline } from "react-icons/io5";
 import { UserData } from "../context/userDataContext.js";
+import { IoPencil } from "react-icons/io5";
 
 const EditProfile = () => {
-  const { userData } = useContext(UserData);
-
+  const { userData ,edit,setEdit } = useContext(UserData);
+  const handelEdit = () => {
+     setEdit(!edit)
+   }
   return (
     <>
       {/* Cover photo section */}
@@ -16,7 +19,10 @@ const EditProfile = () => {
           alt=""
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-3 right-3 bg-white bg-opacity-80 rounded-full p-1 text-black text-2xl cursor-pointer hover:bg-opacity-100 transition-shadow shadow-md z-50">
+        <div
+          className="absolute top-3 right-3 bg-white bg-opacity-80 rounded-full p-1 text-black text-2xl cursor-pointer hover:bg-opacity-100 transition-shadow shadow-md z-50"
+          onClick={handelEdit}
+        >
           <IoCameraOutline />
         </div>
       </div>
@@ -24,15 +30,18 @@ const EditProfile = () => {
       {/* Profile picture and plus icon */}
       <div className="relative w-fit mx-3 -mt-14 lg:-mt-20">
         <div className="cursor-pointer">
-          <div className="relative top-4 w-[70px] h-[70px] lg:w-[90px] lg:h-[90px] rounded-full overflow-hidden border-2 border-gray-300 shadow-md">
+          <div className="relative top-4 w-[90px] h-[90px] rounded-full overflow-hidden border-2 border-gray-300 shadow-md">
             <img
               src={dp}
               alt="user profile"
               className="h-full w-full object-cover"
             />
-            <div className="relative top-0 right-0 z-50 bg-[#06a2f0] p-2 lg:p-3 rounded-full text-white text-sm lg:text-lg border-2 border-white shadow-md hover:bg-[#0480c0] transition transform translate-x-1/2 translate-y-1/2">
-              <FaPlus />
-            </div>
+          </div>
+          <div
+            className="absolute top-[50px] left-[50px] z-50 bg-[#06a2f0] p-1  rounded-full text-white text-sm lg:text-lg border-2 border-white shadow-md hover:bg-[#0480c0] transition transform translate-x-1/2 translate-y-1/2"
+            onClick={handelEdit}
+          >
+            <FaPlus />
           </div>
         </div>
 
@@ -49,8 +58,12 @@ const EditProfile = () => {
           <p className="text-md text-gray-700">
             {userData?.data?.location || "Delhi, India"}
           </p>
-          <button className="mt-4 w-full h-[40px] cursor-pointer rounded-full border border-[#006699] px-8 text-[#0372a1] hover:bg-[#006699] hover:text-white transition">
+          <button
+            className="mt-4 ml-6 w-full h-[40px] cursor-pointer rounded-full border border-[#006699] px-8 text-[#0372a1] hover:bg-[#006699] hover:text-white transition flex items-center justify-center gap-2"
+            onClick={handelEdit}
+          >
             Edit Profile
+            <IoPencil />
           </button>
         </div>
       </div>
