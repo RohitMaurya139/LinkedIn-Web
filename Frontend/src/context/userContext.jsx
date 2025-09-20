@@ -5,6 +5,7 @@ import axios from "axios";
 
 function UserContext({ children }) {
   const [userData, setUserData] = useState(null);
+  const [userPost,setUserPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [edit , setEdit]=useState(false)
   const [post, setPost] = useState(false);
@@ -26,13 +27,30 @@ function UserContext({ children }) {
     }
   }, [SERVER_URL]);
 
-  useEffect(() => {
-    fetchUserData();
-  }, [fetchUserData]);
+  const getAllPost = useCallback(async () => {
+    try {
+      const res = await axios.get(SERVER_URL + "/api/post/get", {
+        withCredentials: true,
+      });
+      console.log(res.data);
+      setUserPost(res.data)
+    } catch (error) {
+      console.error(error.message);
+            setUserPost(null);
+
+    }
+  }, [SERVER_URL]);
+
+ useEffect(() => {
+   if (!SERVER_URL) return; // don't call API if SERVER_URL is not defined yet
+   fetchUserData();
+   getAllPost();
+ }, [SERVER_URL, fetchUserData, getAllPost]);
+
 
   return (
     <UserData.Provider
-      value={{ userData, setUserData,edit , setEdit, post,setPost, loading, refreshUserData: fetchUserData }}
+      value={{ userData, setUserData,edit,userPost,setUserPost, setEdit, post,setPost, loading, refreshUserData: fetchUserData }}
     >
       {children}
     </UserData.Provider>

@@ -1,19 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { FaSearch, FaHome, FaUserFriends } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
 import dp from "../assets/dp.webp";
 import logo2 from "../assets/logo2.png";
-import {UserData} from "../context/userDataContext.js"
+import { UserData } from "../context/userDataContext.js";
 import UserInfoCard from "./UserInfoCard.jsx";
+
 const Navbar = () => {
-  const [showUserInfo, setShowUserInfo] = useState(false)
-  const {userData}= useContext(UserData)
-    const handelShowButton = () => {
-         setShowUserInfo(!showUserInfo)
-     }
+  const [showUserInfo, setShowUserInfo] = useState(false);
+  const { userData } = useContext(UserData);
+  const userInfoRef = useRef();
+
+  // Handle click-away close
+  useEffect(() => {
+    if (!showUserInfo) return;
+
+    const handleClickOutside = (event) => {
+      if (userInfoRef.current && !userInfoRef.current.contains(event.target)) {
+        setShowUserInfo(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showUserInfo]);
+
+  const handelShowButton = () => setShowUserInfo(true);
 
   return (
-    <div className="bg-white fixed w-full h-[60px] lg:h-[80px] inset-0 shadow-lg flex items-center justify-between px-6 lg:px-20 z-50">
+    <div className="bg-white fixed w-full h-[60px] lg:h-[80px] inset-0 shadow-lg flex items-center justify-between px-6 lg:px-20 z-500">
       {/* Left: Logo and Search */}
       <div className="flex items-center gap-6">
         <img
@@ -33,14 +47,25 @@ const Navbar = () => {
       </div>
 
       {/* Right: Navigation Items */}
-      <div className=" flex items-center gap-8 text-gray-600 font-semibold  relative">
-       
-              {showUserInfo && <UserInfoCard />}
+      <div className="flex items-center gap-8 text-gray-600 font-semibold relative">
+        {showUserInfo && (
+          <div
+            ref={userInfoRef}
+            className="absolute -top-4 right-3 z-50"
+            // Style/position as needed
+          >
+            <UserInfoCard />
+          </div>
+        )}
+
         <NavItem icon={<FaHome />} label="Home" />
         <NavItem icon={<FaUserFriends />} label="My Network" />
         <NavItem icon={<IoMdNotifications />} label="Notifications" />
 
-        <div className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px] rounded-full overflow-hidden cursor-pointer border-2 border-gray-300 hover:border-[#006699] transition mx-3" onClick={handelShowButton}>
+        <div
+          className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px] rounded-full overflow-hidden cursor-pointer border-2 border-gray-300 hover:border-[#006699] transition mx-3"
+          onClick={handelShowButton}
+        >
           <img
             src={userData.data.ProfilePic || dp}
             alt="user profile"

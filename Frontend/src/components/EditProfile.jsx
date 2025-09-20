@@ -13,7 +13,7 @@ const EditProfile = () => {
   return (
     <>
       {/* Cover photo section */}
-      <div className="w-full h-[120px] bg-gray-400 rounded-t-lg overflow-hidden flex items-center justify-center relative">
+      <div className="w-full h-[120px] bg-gray-400 rounded-t-lg overflow-hidden flex items-center justify-center relative ">
         <img
           src={userData.data.CoverPic}
           alt=""
