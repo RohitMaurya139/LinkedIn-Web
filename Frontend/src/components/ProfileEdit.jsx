@@ -1,3 +1,5 @@
+/* The above code is a React component called `ProfileEdit` that allows users to edit their profile
+information. Here is a summary of what the code does: */
 import React, { useContext, useRef, useState } from "react";
 import { ImCross } from "react-icons/im";
 import { UserData } from "../context/userDataContext";
@@ -5,9 +7,11 @@ import dp from "../assets/dp.webp";
 import { FaPlus } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { IoCameraOutline } from "react-icons/io5";
-
+import { AuthDataContext } from "../context/authDataContext";
+import axios from "axios"
 const ProfileEdit = () => {
-  const { userData, edit, setEdit } = useContext(UserData);
+  const { userData, edit, setEdit, setUserData } = useContext(UserData);
+  const {SERVER_URL}= useContext(AuthDataContext)
   const handelEdit = () => {
     setEdit(!edit);
   };
@@ -21,6 +25,7 @@ const ProfileEdit = () => {
   const [gender, setGender] = useState(userData.data.gender || "");
   const [skills, setSkills] = useState(userData.data.skills || []);
   const [newSkill, setNewSkill] = useState("");
+  const [save, setSave] = useState(false)
   const [education, setEducation] = useState(userData.data.education || []);
   const [newEducation, setNewEducation] = useState({
     college: "",
@@ -45,6 +50,36 @@ const ProfileEdit = () => {
     description: "",
     duration: "",
   });
+  const handelSaveProfile = async () => {
+    try {
+      setSave(false);
+      let formdata = new FormData();
+      formdata.append("FirstName",firstName)
+      formdata.append("LastName",lastName)
+      formdata.append("UserName", userName);
+      formdata.append("headline", headline);
+      formdata.append("location", location);
+      formdata.append("gender", gender);
+      formdata.append("skills", JSON.stringify(skills));
+      formdata.append("education", JSON.stringify(education));
+      formdata.append("experience", JSON.stringify(experience));
+      if (backendProfileImage) {
+        formdata.append("ProfilePic", backendProfileImage);
+      }
+      if (backendCoverImage) {
+        formdata.append("CoverPic", backendCoverImage);
+      }
+      const res = await axios.put(SERVER_URL + "/api/user/updateprofile", formdata, { withCredentials: true });
+      setSave(true);
+      setEdit(false);
+      setUserData(res.data)
+
+    } catch (error) {
+      setSave(true);
+      console.log(error.message);
+   }
+ }
+
 
   const addSkill = (e) => {
     e.preventDefault();
@@ -426,8 +461,11 @@ const ProfileEdit = () => {
                 </div>
               </div>
             </form>
-            <button className="w-fit h-[40px] mt-2  flex items-center ml-70 bg-green-500 cursor-pointer rounded-lg border px-6 py-4 border-[#29d532] text-white hover:bg-[#1f8705] hover:text-white transition">
-              Save Profile
+            <button
+              className="w-fit h-[40px] mt-2  flex items-center ml-70 bg-green-500 cursor-pointer rounded-lg border px-6 py-4 border-[#29d532] text-white hover:bg-[#1f8705] hover:text-white transition"
+              onClick={handelSaveProfile}
+            >
+              {save? "Saving..." :"Save Profile"}
             </button>
           </div>
         </div>

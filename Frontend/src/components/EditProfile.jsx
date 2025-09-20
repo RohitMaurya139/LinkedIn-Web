@@ -32,7 +32,7 @@ const EditProfile = () => {
         <div className="cursor-pointer">
           <div className="relative top-4 w-[90px] h-[90px] rounded-full overflow-hidden border-2 border-gray-300 shadow-md">
             <img
-              src={dp}
+              src={userData.data.ProfilePic || dp}
               alt="user profile"
               className="h-full w-full object-cover"
             />

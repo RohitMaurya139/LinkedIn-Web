@@ -25,7 +25,7 @@ const UserInfoCard = () => {
         <div className="w-[200px] h-[300px] bg-white shadow-lg absolute top-[75px] right-3 rounded-lg flex flex-col p-3 gap-3 items-center">
           <div className="w-[25px] h-[25px] lg:w-[40px] lg:h-[40px] rounded-full overflow-hidden cursor-pointer border-2 border-gray-300 hover:border-[#006699] transition">
             <img
-              src={dp}
+              src={userData.data.ProfilePic || dp}
               alt="user profile"
               className="h-full w-full object-cover"
             />

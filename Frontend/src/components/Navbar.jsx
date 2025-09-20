@@ -6,7 +6,8 @@ import logo2 from "../assets/logo2.png";
 import {UserData} from "../context/userDataContext.js"
 import UserInfoCard from "./UserInfoCard.jsx";
 const Navbar = () => {
-    const [showUserInfo,setShowUserInfo]=useState(false)
+  const [showUserInfo, setShowUserInfo] = useState(false)
+  const {userData}= useContext(UserData)
     const handelShowButton = () => {
          setShowUserInfo(!showUserInfo)
      }
@@ -41,7 +42,7 @@ const Navbar = () => {
 
         <div className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px] rounded-full overflow-hidden cursor-pointer border-2 border-gray-300 hover:border-[#006699] transition mx-3" onClick={handelShowButton}>
           <img
-            src={dp}
+            src={userData.data.ProfilePic || dp}
             alt="user profile"
             className="h-full w-full object-cover"
           />

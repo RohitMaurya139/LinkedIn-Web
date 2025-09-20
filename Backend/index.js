@@ -5,7 +5,7 @@ import connectDB from "./config/db.js";
 import cors from "cors";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
-
+import postRouter from "./routes/postRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -35,6 +35,7 @@ const PORT = process.env.PORT || 4000;
 // API routes
 app.use("/api/auth", authRouter);
 app.use("/api/user",userRouter)
+app.use("/api/post",postRouter)
 
 const startServer = async () => {
   await connectDB();

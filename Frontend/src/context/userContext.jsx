@@ -7,6 +7,7 @@ function UserContext({ children }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [edit , setEdit]=useState(false)
+  const [post, setPost] = useState(false);
   const { SERVER_URL } = useContext(AuthDataContext);
 
   const fetchUserData = useCallback(async () => {
@@ -31,7 +32,7 @@ function UserContext({ children }) {
 
   return (
     <UserData.Provider
-      value={{ userData, setUserData,edit , setEdit, loading, refreshUserData: fetchUserData }}
+      value={{ userData, setUserData,edit , setEdit, post,setPost, loading, refreshUserData: fetchUserData }}
     >
       {children}
     </UserData.Provider>
