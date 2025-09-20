@@ -2,43 +2,46 @@ import React, { useContext, useRef, useState } from "react";
 import { ImCross } from "react-icons/im";
 import { UserData } from "../context/userDataContext";
 import { AuthDataContext } from "../context/authDataContext";
+import { MdInsertPhoto } from "react-icons/md";
 import axios from "axios";
 
 const PostEdit = () => {
   const { userData, post, setPost, setUserData } = useContext(UserData);
   const { SERVER_URL } = useContext(AuthDataContext);
-  const [content, setContent] = useState("");
-  const [attachment, setAttachment] = useState(null);
+  const [frontendImage,setFrontendImage] = useState(null);
+  const [backendImage, setBackendImage] = useState(null);
+  const [description, setDescription] = useState("");
+  const [posting, setPosting] = useState(false);
+  
   const fileInputRef = useRef();
 
   const handleClose = () => setPost(!post);
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setAttachment(e.target.files[0]);
+      let file = e.target.files[0]
+      setBackendImage(file);
+      setFrontendImage(URL.createObjectURL(file))
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleUploadPost = async (e) => {
     e.preventDefault();
     try {
+      setPosting(true)
       let formData = new FormData();
-      formData.append("content", content);
-      if (attachment) {
-        formData.append("attachment", attachment);
+      formData.append("description", description);
+      if (backendImage) {
+        formData.append("image", backendImage);
       }
-      // Example endpoint, edit as needed
-      const res = await axios.post(`${SERVER_URL}/api/posts/create`, formData, {
+      const res = await axios.post(`${SERVER_URL}/api/post/create`, formData, {
         withCredentials: true,
       });
-      // Optionally update userData or posts in parent
-      setUserData((prev) => ({
-        ...prev,
-        posts: [res.data.data, ...(prev.posts || [])],
-      }));
-      setContent("");
-      setAttachment(null);
-      setPost(false); // Close modal
+      console.log(res.data)
+      setPosting(false)
+      setDescription("")
+      setFrontendImage(null);
+      setPost(false);
     } catch (err) {
       console.error(err.message);
       alert("Failed to submit post!");
@@ -51,34 +54,39 @@ const PostEdit = () => {
       <div className="fixed inset-0 z-[100] flex items-center justify-center">
         {/* Background overlay */}
         <div
-          className="absolute inset-0 bg-black opacity-50"
+          className="absolute inset-0 bg-black/60"
           onClick={handleClose}
         ></div>
         {/* Modal content */}
-        <div className="relative w-[90%] max-w-[500px] max-h-[90vh] bg-white rounded-lg shadow-lg z-[300] flex flex-col px-3 overflow-auto">
-          <div className="absolute left-2 top-2 text-gray-600 text-xl font-black p-1 rounded-lg">
-            New Post
+        <div className="relative w-full max-w-[480px] bg-white rounded-xl shadow-2xl z-[300] px-6 py-8 flex flex-col gap-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-gray-700 text-lg font-semibold">
+              New Post
+            </span>
+            <button
+              className="bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition"
+              onClick={handleClose}
+              aria-label="Close"
+            >
+              <ImCross size={18} />
+            </button>
           </div>
-          <button
-            className="absolute right-2 top-2 bg-red-600 text-white p-1 rounded-lg hover:scale-105"
-            onClick={handleClose}
-          >
-            <ImCross />
-          </button>
-          <form
-            className="flex flex-col gap-4 items-center mt-2 justify-center py-8"
-            onSubmit={handleSubmit}
-          >
+          <form className="flex flex-col gap-6">
             <textarea
-              className="w-[90%] h-32 px-4 py-2 border rounded-md focus:outline-none resize-none"
+              className="w-full min-h-[200px]  px-4 py-2 border border-gray-300 rounded-lg focus:outline-none  text-gray-700 transition resize-none overflow-auto"
               placeholder="What's on your mind?"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               required
             />
-            <div className="w-[90%] flex flex-col items-center gap-3">
-              {attachment && (
-                <div className="text-xs text-gray-500">{attachment.name}</div>
+            <div className="flex flex-col gap-2">
+              {frontendImage && (
+                <div className="text-xs text-gray-600 ml-1">
+                  <img
+                    src={frontendImage || ""}
+                    className="w-20 h-20 rounded-lg"
+                  />
+                </div>
               )}
               <input
                 type="file"
@@ -90,17 +98,23 @@ const PostEdit = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current.click()}
-                className="w-full h-[40px] mt-2 cursor-pointer rounded-full border px-8 border-[#0572b6] text-[#1892d9] hover:bg-[#1892d9] hover:text-white transition"
+                className="flex items-center gap-2 bg-[#f3f3f3] hover:bg-[#e7e7e7] px-4 py-2 rounded-lg text-[#006699] font-medium transition cursor-pointer"
               >
-                Add Attachment
+                <MdInsertPhoto size={28} className="mr-2" />{" "}
+                <span>Add Photo</span>
               </button>
             </div>
-            <div className="flex w-[90%] gap-3">
-              <button className="w-full h-[40px] mt-2 cursor-pointer rounded-full border px-8 border-[#22b605] text-[#35d918] hover:bg-[#55d918] hover:text-white transition">
-                Post
+            <div className="flex gap-4 justify-end">
+              <button
+                type="submit"
+                className="px-5 py-2 rounded-full bg-[#22b605] text-white font-medium hover:bg-[#35d918] shadow transition cursor-pointer"
+                onClick={handleUploadPost}
+              >
+                {posting?"Posting...":"Post"}
               </button>
               <button
-                className="w-full h-[40px] mt-2 cursor-pointer rounded-full border px-8 border-[#b61a05] text-[#d91818] hover:bg-[#d91818] hover:text-white transition"
+                type="button"
+                className="px-5 py-2 rounded-full bg-[#ffd3d3] text-[#c43828] hover:bg-[#e94444] hover:text-white font-medium cursor-pointer shadow transition"
                 onClick={handleClose}
               >
                 Cancel
@@ -114,3 +128,4 @@ const PostEdit = () => {
 };
 
 export default PostEdit;
+ 

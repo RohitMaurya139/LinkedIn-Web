@@ -169,26 +169,26 @@ const ProfileEdit = () => {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         {/* Modal content */}
         <div className="relative w-[90%] max-w-[500px] max-h-[90vh] bg-white rounded-lg shadow-lg z-[200] flex flex-col px-3 overflow-auto">
-          <div className="m-2 absolute left-2 top-2 text-gray-600 text-xl font-black p-1 rounded-lg hover:scale-105 cursor-pointer ">
+          <div className="mx-2 my-4  absolute left-2 top-2 text-gray-600 text-xl font-black p-1 rounded-lg hover:scale-105 cursor-pointer ">
             Edit Profile
           </div>
           <div
-            className="m-2 absolute right-2 top-2 bg-red-600 text-white p-1 rounded-lg hover:scale-105 cursor-pointer"
+            className="mx-2 my-4 absolute right-2 top-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition "
             onClick={handelEdit}
           >
             <ImCross />
           </div>
 
-          <div className="w-full h-[300px] bg-gray-500 rounded-lg mt-[50px] overflow-hidden px-3">
+          <div className="w-full h-[600px] bg-gray-200 rounded-lg mt-[80px] overflow-hidden px-3">
             <img src={frontendCoverImage} className="w-full" />
           </div>
           <div
-            className="absolute top-15 right-5 bg-white bg-opacity-80 rounded-full p-1 text-black text-2xl cursor-pointer hover:bg-opacity-100 transition-shadow shadow-md z-50"
+            className="absolute top-23 right-5 bg-white bg-opacity-80 rounded-full p-1 text-black text-2xl cursor-pointer hover:bg-opacity-100 transition-shadow shadow-md z-50"
             onClick={() => coverImage.current.click()}
           >
             <IoCameraOutline />
           </div>
-          <div className="absolute top-20 left-5 z-48 w-[85px] h-[85px] rounded-full overflow-hidden border-2 border-gray-300 shadow-md">
+          <div className="absolute top-35 left-5 z-48 w-[85px] h-[85px] rounded-full overflow-hidden border-2 border-gray-300 shadow-md">
             <img
               src={frontendProfileImage}
               alt="user profile"
@@ -196,7 +196,7 @@ const ProfileEdit = () => {
             />
           </div>
           <div
-            className="absolute top-28 left-16 z-50 bg-[#06a2f0] p-1 rounded-full text-white text-sm lg:text-lg border-2 border-white shadow-md hover:bg-[#0480c0] transition transform translate-x-1/2 translate-y-1/2"
+            className="absolute top-40 left-18 z-50 bg-[#06a2f0] p-1 rounded-full text-white text-sm lg:text-lg border-2 border-white shadow-md hover:bg-[#0480c0] transition transform translate-x-1/2 translate-y-1/2"
             onClick={() => profileImage.current.click()}
           >
             <FaPlus />
@@ -465,7 +465,7 @@ const ProfileEdit = () => {
               className="w-fit h-[40px] mt-2  flex items-center ml-70 bg-green-500 cursor-pointer rounded-lg border px-6 py-4 border-[#29d532] text-white hover:bg-[#1f8705] hover:text-white transition"
               onClick={handelSaveProfile}
             >
-              {save? "Saving..." :"Save Profile"}
+              {save ? "Saving..." : "Save Profile"}
             </button>
           </div>
         </div>
