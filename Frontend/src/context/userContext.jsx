@@ -50,7 +50,18 @@ function UserContext({ children }) {
 
   return (
     <UserData.Provider
-      value={{ userData, setUserData,edit,userPost,setUserPost, setEdit, post,setPost, loading, refreshUserData: fetchUserData }}
+      value={{
+        userData,
+        setUserData,
+        edit,
+        userPost,
+        getAllPost,setUserPost,
+        setEdit,
+        post,
+        setPost,
+        loading,
+        refreshUserData: fetchUserData,
+      }}
     >
       {children}
     </UserData.Provider>

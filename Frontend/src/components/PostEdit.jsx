@@ -58,7 +58,7 @@ const PostEdit = () => {
           onClick={handleClose}
         ></div>
         {/* Modal content */}
-        <div className="relative w-full max-w-[480px] bg-white rounded-xl shadow-2xl z-[300] px-6 py-8 flex flex-col gap-4">
+        <div className="relative w-full max-w-[480px] bg-white rounded-xl shadow-2xl z-[300] px-6 py-8 flex flex-col gap-4 mt-10">
           <div className="flex justify-between items-center mb-2">
             <span className="text-gray-700 text-lg font-semibold">
               New Post

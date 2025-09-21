@@ -22,16 +22,18 @@ const Home = () => {
         <main className="w-full lg:w-1/2 min-h-[200px] flex flex-col gap-2 items-center justify-center pb-4">
           <CreatePost />
           {userPost.data.map((user) => {
-            const { id, author, like, comment, image, description } = user;
+            const { _id, author, like, comment, image, description, createdAt } =
+              user;
             return (
               <UserPost
-                key={id}
-                id={id}
+                key={_id}
+                id={_id}
                 author={author}
                 like={like}
                 comment={comment}
                 image={image}
                 description={description}
+                createdAt={createdAt}
               />
             );
           })}
