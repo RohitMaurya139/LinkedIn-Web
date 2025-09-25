@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { FaSearch, FaHome, FaUserFriends } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
 import dp from "../assets/dp.webp";
-import logo2 from "../assets/logo2.png";
+import logo2 from "../assets/logo3.png";
 import { UserData } from "../context/userDataContext.js";
 import UserInfoCard from "./UserInfoCard.jsx";
 import { useNavigate } from "react-router-dom";
@@ -30,11 +30,11 @@ const navigate = useNavigate();
   return (
     <div className="bg-white fixed w-full h-[60px] lg:h-[80px] inset-0 shadow-lg flex items-center justify-between px-6 lg:px-20 z-500">
       {/* Left: Logo and Search */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-6" onClick={() => navigate("/")}>
         <img
           src={logo2}
           alt="logo"
-          className="w-[40px] lg:w-[50px] cursor-pointer"
+          className="w-[100px] lg:w-[180px] cursor-pointer"
         />
 
         <form className="flex items-center bg-gray-100 rounded-md px-3 py-2 gap-2 w-[200px] lg:w-[450px]">
@@ -59,11 +59,7 @@ const navigate = useNavigate();
           </div>
         )}
 
-        <NavItem
-          icon={<FaHome />}
-          label="Home"
-          onClick={() => navigate("/")}
-        />
+        <NavItem icon={<FaHome />} label="Home" onClick={() => navigate("/")} />
         <NavItem
           icon={<FaUserFriends />}
           label="My Network"

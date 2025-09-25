@@ -1,6 +1,6 @@
 
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.PNG";
+import logo from "../assets/logo3.PNG";
 import view from "../assets/view.png"
 import hide from "../assets/hide.png"
 import { UserData } from "../context/userDataContext";
@@ -50,7 +50,7 @@ const Login = () => {
       <div className="w-full h-screen bg-white flex flex-col items-center justify-start px-4">
         {/* Logo fixed top-left */}
         <div className=" w-full top-0 left-0 px-6 py-3 lg:px-10 lg:py-6">
-          <img src={logo} alt="logo" className="w-18  lg:w-30 " />
+          <img src={logo} alt="logo" className="w-[100px]  lg:w-[200px] " />
         </div>
 
         {/* Form container */}
@@ -104,7 +104,7 @@ const Login = () => {
           </button>
           <Link to={"/signup"}>
             <p className="text-center">
-              New to Linkedin?{" "}
+              New to Netwise?{" "}
               <span className="text-[#006699] font-bold cursor-pointer  hover:text-[#004b70] transition">
                 {" "}
                 Join now
