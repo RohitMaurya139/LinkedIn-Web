@@ -2,21 +2,27 @@ import React, { useContext, useEffect, useState, useCallback } from "react";
 import { UserData } from "./userDataContext.js";
 import { AuthDataContext } from "./authDataContext.js";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
+ import { io } from "socket.io-client";
 function UserContext({ children }) {
   const [userData, setUserData] = useState(null);
-  const [userPost,setUserPost] = useState(null);
+  const [profileData, setProfileData] = useState(null);
+  const [userPostData, setUserPostData] = useState( [] );
   const [loading, setLoading] = useState(true);
   const [edit , setEdit]=useState(false)
   const [post, setPost] = useState(false);
   const { SERVER_URL } = useContext(AuthDataContext);
+ const navigate=useNavigate()
 
+  const socket = io("http://localhost:4000");
   const fetchUserData = useCallback(async () => {
     setLoading(true);
     try {
       const res = await axios.get(SERVER_URL + "/api/user/currentuser", {
         withCredentials: true,
       });
+      console.log(res.data.data)
+      console.log("hello789")
         setUserData(res.data);
       
     } catch (error) {
@@ -33,14 +39,24 @@ function UserContext({ children }) {
         withCredentials: true,
       });
       console.log(res.data);
-      setUserPost(res.data)
+      setUserPostData(res.data);
+
     } catch (error) {
       console.error(error.message);
-            setUserPost(null);
-
     }
   }, [SERVER_URL]);
-
+  const getProfile = useCallback(async (username) => {
+    try {
+      const res = await axios.get(SERVER_URL + `/api/user/profile/${username}`, {
+        withCredentials: true,
+      });
+      console.log(res.data);
+      setProfileData(res.data.data);
+      navigate("/profile")
+    } catch (error) {
+      console.error(error.message);
+    }
+  }, [SERVER_URL]);
  useEffect(() => {
    if (!SERVER_URL) return; // don't call API if SERVER_URL is not defined yet
    fetchUserData();
@@ -54,10 +70,14 @@ function UserContext({ children }) {
         userData,
         setUserData,
         edit,
-        userPost,
-        getAllPost,setUserPost,
+        socket,
+        userPostData,
+        getAllPost,setUserPostData,
         setEdit,
         post,
+        getProfile,
+        profileData,
+        setProfileData,
         setPost,
         loading,
         refreshUserData: fetchUserData,

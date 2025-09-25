@@ -6,7 +6,7 @@ import axios from 'axios';
 import { AuthDataContext } from '../context/authDataContext';
 import { useNavigate } from 'react-router-dom';
 const UserInfoCard = () => {
-    const { userData } = useContext(UserData); 
+    const { userData ,getProfile} = useContext(UserData); 
     const { SERVER_URL } = useContext(AuthDataContext)
     const navigate = useNavigate();
     
@@ -36,11 +36,17 @@ const UserInfoCard = () => {
                 ? `${userData.data.FirstName} ${userData.data.LastName}`
                 : "Guest"}
             </div>
-            <button className="w-full h-[40px] mt-2 cursor-pointer rounded-full border px-8 border-[#006699] text-[#0372a1] hover:bg-[#006699] hover:text-white transition">
+            <button
+              className="w-full h-[40px] mt-2 cursor-pointer rounded-full border px-8 border-[#006699] text-[#0372a1] hover:bg-[#006699] hover:text-white transition"
+              onClick={() => getProfile(userData?.data?.UserName)}
+            >
               View Profile
             </button>
             <hr className="mt-2 border-t border-gray-700" />
-            <div className="flex items-center cursor-pointer justify-center gap-2 mt-2 hover:text-[#006699] transition">
+            <div
+              className="flex items-center cursor-pointer justify-center gap-2 mt-2 hover:text-[#006699] transition"
+              onClick={() => navigate("/network")}
+            >
               <div>
                 <FaUserFriends />
               </div>

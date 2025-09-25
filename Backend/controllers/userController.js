@@ -65,3 +65,21 @@ const skills=req.body.skills?JSON.parse(req.body.skills):[]
        .json({ message: "Server Error", error: error.message });
   }
 }
+
+export const getProfile = async (req, res) => {
+  try {
+    const userName = req.params.username
+
+    const user = await User.findOne({ UserName: userName }).select("-Password");
+    if (!user) {
+      return res.status(400).json({ message: "UserName Not Found" });
+    }
+     return res
+       .status(200)
+       .json({ message: "User Profile Get SuccessFully", data: user });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
+  }
+}

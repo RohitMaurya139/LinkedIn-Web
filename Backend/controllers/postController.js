@@ -1,10 +1,8 @@
 import  uploadOnCloudinary  from "../config/cloudinary.js";
+import { io } from "../index.js";
 import Post from "../models/postModel.js";
 export const createPost = async (req, res) => {
     try {
-
-        console.log("BODY:", req.body);
-        console.log("FILE:", req.file);
 
         const { description } = req.body
         let newPost;
@@ -34,7 +32,7 @@ export const createPost = async (req, res) => {
 export const getPost = async (req, res) => {
   try {
     const post = await Post.find({})
-      .populate("author", "FirstName LastName ProfilePic headline")
+      .populate("author", "FirstName LastName ProfilePic headline _id UserName").populate("comment.user", "FirstName LastName ProfilePic headline")
       .sort({ createdAt :-1});
 
     return res
@@ -57,9 +55,10 @@ export const like = async (req, res) => {
       .json({ message: "Post Not Found"});
     }
     else if (post.like.includes(userId)) {
-      post.like=post.like.filter((id)=> id!==userId)
+      post.like = post.like.filter((id) => id.toString() !== userId.toString());
     }else{ post.like.push(userId)}
     post.save();
+    io.emit("likeUpdated",{postId,likes:post.like})
       return res
         .status(200)
         .json({ message: "Post Liked added Successfully", data: post });
@@ -85,6 +84,7 @@ export const comment = async (req, res) => {
       .populate("comment.user", "FirstName LastName ProfilePic headline")
       .sort({ createdAt: -1 });
     
+     io.emit("commentAdded", { postId, comm: post.comment });
     return res
       .status(200)
       .json({ message: "Post Comment added Successfully", data: post });

@@ -7,10 +7,10 @@ import UserContext from './context/userContext.jsx'
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <AuthContext>
-      <UserContext>
-        <App />
-      </UserContext>
-    </AuthContext>
+      <AuthContext>
+        <UserContext>
+          <App />
+        </UserContext>
+      </AuthContext>
   </BrowserRouter>
 );

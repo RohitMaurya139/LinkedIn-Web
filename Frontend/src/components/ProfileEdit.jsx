@@ -150,7 +150,7 @@ const ProfileEdit = () => {
   return (
     <>
       {/* Modal overlay */}
-      <div className="fixed inset-0 z-[100] flex items-center justify-center">
+      <div className="fixed inset-0 mt-18 z-[100] flex items-center justify-center">
         <input
           type="file"
           accept="image/*"

@@ -64,16 +64,16 @@ const PostEdit = () => {
               New Post
             </span>
             <button
-              className="bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition"
+              className="bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition"
               onClick={handleClose}
               aria-label="Close"
             >
-              <ImCross size={18} />
+              <ImCross size={15} />
             </button>
           </div>
           <form className="flex flex-col gap-6">
             <textarea
-              className="w-full min-h-[200px]  px-4 py-2 border border-gray-300 rounded-lg focus:outline-none  text-gray-700 transition resize-none overflow-auto"
+              className="w-full min-h-[200px]  px-4 py-2  rounded-lg focus:outline-none  text-gray-700 transition resize-none overflow-auto"
               placeholder="What's on your mind?"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -98,19 +98,18 @@ const PostEdit = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current.click()}
-                className="flex items-center gap-2 bg-[#f3f3f3] hover:bg-[#e7e7e7] px-4 py-2 rounded-lg text-[#006699] font-medium transition cursor-pointer"
+                className="flex items-center gap-2   px-4 py-2 rounded-lg text-[#006699] font-medium transition cursor-pointer"
               >
                 <MdInsertPhoto size={28} className="mr-2" />{" "}
-                <span>Add Photo</span>
               </button>
             </div>
             <div className="flex gap-4 justify-end">
               <button
                 type="submit"
-                className="px-5 py-2 rounded-full bg-[#22b605] text-white font-medium hover:bg-[#35d918] shadow transition cursor-pointer"
+                className="px-5 py-2 rounded-full bg-[#006699] text-white font-medium hover:bg-[#025781] shadow transition cursor-pointer"
                 onClick={handleUploadPost}
               >
-                {posting?"Posting...":"Post"}
+                {posting ? "Posting..." : "Post"}
               </button>
               <button
                 type="button"

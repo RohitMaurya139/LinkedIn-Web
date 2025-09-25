@@ -5,12 +5,13 @@ import dp from "../assets/dp.webp";
 import logo2 from "../assets/logo2.png";
 import { UserData } from "../context/userDataContext.js";
 import UserInfoCard from "./UserInfoCard.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [showUserInfo, setShowUserInfo] = useState(false);
   const { userData } = useContext(UserData);
   const userInfoRef = useRef();
-
+const navigate = useNavigate();
   // Handle click-away close
   useEffect(() => {
     if (!showUserInfo) return;
@@ -58,8 +59,16 @@ const Navbar = () => {
           </div>
         )}
 
-        <NavItem icon={<FaHome />} label="Home" />
-        <NavItem icon={<FaUserFriends />} label="My Network" />
+        <NavItem
+          icon={<FaHome />}
+          label="Home"
+          onClick={() => navigate("/")}
+        />
+        <NavItem
+          icon={<FaUserFriends />}
+          label="My Network"
+          onClick={() => navigate("/network")}
+        />
         <NavItem icon={<IoMdNotifications />} label="Notifications" />
 
         <div
@@ -77,8 +86,11 @@ const Navbar = () => {
   );
 };
 
-const NavItem = ({ icon, label }) => (
-  <div className="lg:flex flex-col items-center cursor-pointer hover:text-[#006699] transition hidden">
+const NavItem = ({ icon, label, onClick }) => (
+  <div
+    className="lg:flex flex-col items-center cursor-pointer hover:text-[#006699] transition hidden"
+    onClick={onClick}
+  >
     <div className="text-xl">{icon}</div>
     <div className="text-sm">{label}</div>
   </div>

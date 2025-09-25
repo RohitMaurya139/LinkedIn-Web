@@ -1,22 +1,22 @@
 import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema(
-    {
-        author: {
-          type: mongoose.Schema.ObjectId,
-            ref: "User",
-        required: true,
-      },
+  {
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     image: {
       type: String,
-        },
-        description: {
-            type: String,
-            default:"",
-      },
+    },
+    description: {
+      type: String,
+      default: "",
+    },
     like: [
       {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
@@ -24,7 +24,7 @@ const postSchema = new mongoose.Schema(
       {
         content: { type: String },
         user: {
-          type: mongoose.Schema.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "User",
         },
       },

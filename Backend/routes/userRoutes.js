@@ -1,5 +1,5 @@
 import express from "express"
-import { getCurrentUser, updateProfile } from "../controllers/userController.js"
+import { getCurrentUser, getProfile, updateProfile } from "../controllers/userController.js"
 import isAuth from "../middlewares/isAuth.js";
 import upload from "../middlewares/multer.js"
 const userRouter = express.Router();
@@ -14,5 +14,7 @@ userRouter.put(
   ]),
   updateProfile
 );
+
+userRouter.get("/profile/:username", isAuth, getProfile)
 
 export default userRouter;
