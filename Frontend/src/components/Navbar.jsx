@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { FaSearch, FaHome, FaUserFriends } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
 import dp from "../assets/dp.webp";
-import logo2 from "../assets/logo4.png";
+import logo2 from "../assets/logo4.PNG";
 import { UserData } from "../context/userDataContext.js";
 import UserInfoCard from "./UserInfoCard.jsx";
 import { useNavigate } from "react-router-dom";
