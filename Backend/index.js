@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 // Dynamic allowed origins for CORS
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+const allowedOrigins = ["https://netwise-webapp-frontend.onrender.com","http://localhost:5173", "http://localhost:5174"];
 export const io = new Server(server, {
   cors: ({
     origin: function (origin, callback) {
