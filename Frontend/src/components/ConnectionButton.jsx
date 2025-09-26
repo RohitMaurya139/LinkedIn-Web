@@ -5,7 +5,9 @@ import { UserData } from '../context/userDataContext';
 import { io } from "socket.io-client";
 import { useNavigate } from 'react-router-dom';
 
-const socket = io("https://netwise-webapp.onrender.com/");
+const socket = io("https://netwise-webapp.onrender.com", {
+  withCredentials: true,
+});
 const ConnectionButton = ({userId}) => {
   const { SERVER_URL } = useContext(AuthDataContext);
   const [status, setStatus] = useState("")
