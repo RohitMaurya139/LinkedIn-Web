@@ -1,6 +1,7 @@
 
 import { io, userSocketMap } from "../index.js";
 import Connection from "../models/connectionModel.js";
+import Notification from "../models/notificationModel.js";
 import User from "../models/userModel.js";
 export const sendConnection = async (req, res) => {
   try {
@@ -70,7 +71,7 @@ export const sendConnection = async (req, res) => {
 export const acceptConnection = async (req, res) => {
   try {
     const { connectionId } = req.params;
-
+    const userId=req.userId 
     const connection = await Connection.findById(connectionId).populate(
       "sender receiver"
     );
@@ -83,6 +84,11 @@ export const acceptConnection = async (req, res) => {
 
     // Update status to 'accepted'
     connection.status = "accepted";
+       const notification = await Notification.create({
+         receiver: connection.sender,
+         type: "connectionAccepted",
+         relatedUser: userId,
+       });
     await connection.save();
 
     // Add each other to connections using $addToSet to avoid duplicates
@@ -112,7 +118,7 @@ export const acceptConnection = async (req, res) => {
         newStatus: "disconnect",
       });
     }
-
+  
     // Return response at the end (not inside if-block)
     return res.status(200).json({
       message: "Connection request accepted",

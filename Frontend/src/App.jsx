@@ -6,13 +6,21 @@ import { useContext } from "react";
 import { UserData } from "./context/userDataContext.js";
 import Network from "./pages/Network.jsx";
 import Profile from "./pages/Profile.jsx";
+import Shimmer from "./components/Shimmer.jsx";
+import Notification from "./pages/Notification.jsx";
 
 function App() {
   const { userData, loading } = useContext(UserData);
 
   if (loading) {
     // Show loading spinner or blank while user data is loading
-    return <div>Loading...</div>;
+    return (
+      <div className="space-y-2 justify-center items-center flex">
+        <Shimmer className="w-3/4 h-4" />
+        <Shimmer className="w-full h-4" />
+        <Shimmer className="w-5/6 h-4" />
+      </div>
+    );
   }
 
   return (
@@ -30,6 +38,10 @@ function App() {
       <Route
         path="/profile"
         element={userData ? <Profile /> : <Navigate to={"/login"} />}
+      />
+      <Route
+        path="/notification"
+        element={userData ? <Notification /> : <Navigate to={"/login"} />}
       />
     </Routes>
   );

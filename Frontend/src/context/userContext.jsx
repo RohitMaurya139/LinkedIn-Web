@@ -3,7 +3,10 @@ import { UserData } from "./userDataContext.js";
 import { AuthDataContext } from "./authDataContext.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
- import { io } from "socket.io-client";
+import { socket } from "./userDataContext.js";
+
+
+
 function UserContext({ children }) {
   const [userData, setUserData] = useState(null);
   const [profileData, setProfileData] = useState(null);
@@ -14,7 +17,6 @@ function UserContext({ children }) {
   const { SERVER_URL } = useContext(AuthDataContext);
  const navigate=useNavigate()
 
-  const socket = io("http://localhost:4000");
   const fetchUserData = useCallback(async () => {
     setLoading(true);
     try {

@@ -10,9 +10,7 @@ import { AuthDataContext } from "../context/authDataContext.js";
 import { UserData } from "../context/userDataContext.js";
 import { LuSendHorizontal } from "react-icons/lu";
 import ConnectionButton from "./ConnectionButton.jsx";
-import { io } from 'socket.io-client'
 
-const socket=io("http://localhost:4000")
 const UserPost = ({
   id,
   author,
@@ -25,12 +23,12 @@ const UserPost = ({
 
   const [showCommentPosting, setShowCommentPosting] = useState(false);
   const [commentContent, setCommentContent] = useState("");
-  const [comments, setComments] = useState(comment || []);
-  const { getAllPost, userData, getProfile, profileData, setProfileData } =
+  const [comments, setComments] = useState( []);
+  const { getAllPost, userData, getProfile, socket,profileData, setProfileData } =
     useContext(UserData);
   const { SERVER_URL, userId } = useContext(AuthDataContext);
  const [more,setMore]=useState(false)
-  const [likes, setLikes] = useState(like || []);
+  const [likes, setLikes] = useState( []);
   const [commentCount, setCommentCount] = useState(comment.length);
 
   // Sync liked status from likes array
@@ -83,10 +81,12 @@ const UserPost = ({
         socket.off("commentAdded");
       }
     
-},[id])
+  }, [id])
+  
   useEffect(() => {
-    getAllPost()
-  },[likes,setLikes,comments])
+    setLikes(like)
+    setComments(comment)
+  },[like,comment])
   return (
     <div className="w-full mx-auto my-2 bg-white rounded-lg shadow-md p-4">
       {/* Post Header */}

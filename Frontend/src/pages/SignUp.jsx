@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/logo3.PNG";
+import logo from "../assets/logo4.PNG";
 import view from "../assets/view.png";
 import { AuthDataContext }  from "../context/authDataContext";
 import hide from "../assets/hide.png";

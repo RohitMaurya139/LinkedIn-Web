@@ -34,9 +34,9 @@ const Profile = () => {
     setProfilePost(
       userPostData.data.filter((post) => post.author._id == profileData._id)
     );
-  },[])
+  },[profileData])
   return (
-    <div className="w-full min-h-screen bg-[#f1f1ee] flex flex-col items-center  pt-20">
+    <div className="w-full min-h-screen bg-[#f1f1ee] flex flex-col items-center ">
       {edit && <ProfileEdit />}
       <Navbar />
       <div className="w-full max-w-[900px] min-h-screen bg-white rounded-lg shadow-lg flex flex-col items-center">
@@ -89,7 +89,7 @@ const Profile = () => {
                 <IoPencil />
               </button>
             )}
-          
+          {userData.data._id != profileData._id && <ConnectionButton userId={profileData._id}/> }
           </div>
         </div>
       </div>

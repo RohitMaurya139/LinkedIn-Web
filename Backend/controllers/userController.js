@@ -83,3 +83,42 @@ export const getProfile = async (req, res) => {
       .json({ message: "Server Error", error: error.message });
   }
 }
+
+export const search = async (req, res) => {
+  try {
+    const { query } = req.query;
+    if (!query) {
+      return res.status(400).json({ message: "Query is Required" });
+    }
+    const users = await User.find({
+      $or: [
+        { FirstName: { $regex: query, $options: "i" } },
+        { LastName: { $regex: query, $options: "i" } },
+        { UserName: { $regex: query, $options: "i" } },
+        { skills: { $in: [query] } },
+      ],
+    });
+    return res.status(200).json({message:"search successful",data:users})
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
+  }
+}
+export const getSuggestedUsers = async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.userId).select("connection");
+    const excludeIds = [req.userId, ...currentUser.connection];
+    const suggestedUsers = await User.find({ _id: { $nin: excludeIds } });
+    return res
+      .status(200)
+      .json({
+        message: "Suggested user Fetched successful",
+        data: suggestedUsers,
+      });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
+  }
+};
