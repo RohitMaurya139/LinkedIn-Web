@@ -1,7 +1,7 @@
 import { AuthDataContext } from "./authDataContext";
 
 function AuthContext({ children }) {
-  const SERVER_URL = "http://localhost:4000";
+  const SERVER_URL = "https://netwise-webapp.onrender.com/";
   const data = {
     SERVER_URL,
   };
