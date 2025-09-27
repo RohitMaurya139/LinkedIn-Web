@@ -27,7 +27,7 @@ export const signUp = async(req, res) => {
        res.cookie("token", token, {
          httpOnly: true,
          secure: process.env.NODE_ENV === "production", // true only on HTTPS in production
-         sameSite: "lax", // Allows cross-site cookies on top-level navigation
+          sameSite: "None", // Required for cross-site
          maxAge: 24 * 60 * 60 * 1000, // 1 day
        });
 
@@ -56,7 +56,7 @@ export const login = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            sameSite: "None", // Required for cross-site
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
         res.status(200).json({ message: `Welcome back! ${user.FirstName} ${user.LastName}`, data: user });
